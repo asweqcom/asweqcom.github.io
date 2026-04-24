@@ -517,17 +517,20 @@
         </div>
     </div>
 
-    <script>
-    // ==========================================
-    // 1. CONFIGURATION (NEW FORM ACTIONS ADDED)
-    // ==========================================
+<script>
+    // 1. CONFIGURATION
     const GOOGLE_OFFER_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSeQ6247yrwM9kiTIrvtchnG_PrpTumvka36drjPg61SF8f2GA/formResponse";
     const GOOGLE_DEMAND_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSccSKH19bDclO6Cnjm2yvoqzrkplBJKPiVVVQbonq4Eq4tjdA/formResponse";
     const GOOGLE_CONTACT_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSf7oqctQLgEglOcmhv5V999kP0fwoUMM7MAqBfsPNFJfaX0wg/formResponse";
-    
-    // New Actions from your links
     const GOOGLE_FIND_SUPPLIER_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSfs5X-WdLUKZ9wBr5r6VjDifMcL6qZt0-UEotweMAiO_w-4Fw/formResponse";
     const GOOGLE_NEW_SUPPLIER_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSeUsTNGUXMytnJXNRKkExWxAmNtwC7tosuy2Jj-_JP6JBkVGw/formResponse";
+
+    // Global Flags and Timers
+    let contactSubmitted = false, contactTimer = null;
+    let offerSubmitted = false, offerTimer = null;
+    let demandSubmitted = false, demandTimer = null;
+    let findSupplierSubmitted = false, findSupplierTimer = null;
+    let newSupplierSubmitted = false, newSupplierTimer = null;
 
     document.addEventListener('DOMContentLoaded', () => {
         if (document.getElementById('contactForm')) document.getElementById('contactForm').action = GOOGLE_CONTACT_ACTION;
@@ -537,157 +540,103 @@
         if (document.getElementById('newSupplierForm')) document.getElementById('newSupplierForm').action = GOOGLE_NEW_SUPPLIER_ACTION;
     });
 
-// ==========================================
-// CORE UTILITIES
-// ==========================================
-async function hasRealInternet() {
-    if (!window.navigator.onLine) return false;
-    try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 4000);
-        const response = await fetch("https://www.google.com/favicon.ico", { 
-            mode: 'no-cors', cache: 'no-store', signal: controller.signal 
-        });
-        clearTimeout(timeoutId);
-        return true;
-    } catch (err) { return false; }
-}
-
-// ==========================================
-// UNIVERSAL SUBMIT (5 Variables maintained)
-// ==========================================
-async function universalSubmit(btnId, originalText, timerVar, submittedVarName, formId) {
-    const btn = document.getElementById(btnId);
-    const originalBtnHTML = btn.innerHTML;
-    
-    btn.disabled = true; 
-    btn.innerHTML = `جاري التحقق...`;
-
-    // 1. Internet Check (Matches old version logic)
-    const isOnline = await hasRealInternet();
-    if (!isOnline) {
-        btn.disabled = false; 
-        btn.innerHTML = originalText; // Revert to original text
-        alert("لا يوجد اتصال فعلي بالإنترنت. يرجى التأكد من الشبكة والمحاولة مرة أخرى.");
-        return false; // Blocks the form submission
+    // 2. CORE UTILITIES
+    async function hasRealInternet() {
+        if (!window.navigator.onLine) return false;
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 4000);
+            const response = await fetch("https://www.google.com/favicon.ico", { 
+                mode: 'no-cors', cache: 'no-store', signal: controller.signal 
+            });
+            clearTimeout(timeoutId);
+            return true;
+        } catch (err) { return false; }
     }
 
-    // 2. Start Sending
-    btn.innerHTML = `جاري الارسال ...`;
-    window[submittedVarName] = true;
+    // 3. UNIVERSAL SUBMIT (The "Old Version" Style)
+    async function universalSubmit(btnId, originalText, timerVar, submittedVarName, formId) {
+        const btn = document.getElementById(btnId);
+        btn.disabled = true; 
+        btn.innerHTML = `جاري التحقق...`;
 
-    // 3. Safety Timer (10 seconds)
-    window[timerVar] = setTimeout(() => {
-        if (window[submittedVarName]) {
-            window[submittedVarName] = false;
+        const isOnline = await hasRealInternet();
+        if (!isOnline) {
             btn.disabled = false; 
             btn.innerHTML = originalText;
-            alert("حدث خطأ في الشبكة أو استغرق الإرسال وقتاً طويلاً.");
+            alert("لا يوجد اتصال فعلي بالإنترنت. يرجى التأكد من الشبكة والمحاولة مرة أخرى.");
+            return false; 
         }
-    }, 10000);
 
-    return true; // Form continues to hidden iframe
-}
+        btn.innerHTML = `جاري الارسال ...`;
+        window[submittedVarName] = true;
 
-// ==========================================
-// UPDATED HANDLERS
-// ==========================================
-async function handleContactSubmit(form) { return await universalSubmit('submitBtnContact', 'إرسال الرسالة', 'contactTimer', 'contactSubmitted', 'contactForm'); }
-async function handleFormSubmit(form) { return await universalSubmit('submitBtn', 'إرسال تفاصيل العرض', 'offerTimer', 'offerSubmitted', 'offerForm'); }
-async function handleDemandSubmit(form) { return await universalSubmit('submitBtnDemand', 'إرسال تفاصيل الطلب', 'demandTimer', 'demandSubmitted', 'demandForm'); }
-async function handleFindSupplierSubmit(form) { return await universalSubmit('submitBtnFindSupplier', 'إرسال الطلب', 'findSupplierTimer', 'findSupplierSubmitted', 'findSupplierForm'); }
-async function handleNewSupplierSubmit(form) { return await universalSubmit('submitBtnNewSupplier', 'تسجيل المورد', 'newSupplierTimer', 'newSupplierSubmitted', 'newSupplierForm'); }
+        window[timerVar] = setTimeout(() => {
+            if (window[submittedVarName]) {
+                window[submittedVarName] = false;
+                btn.disabled = false; 
+                btn.innerHTML = originalText;
+                alert("حدث خطأ في الشبكة أو استغرق الإرسال وقتاً طويلاً.");
+            }
+        }, 10000);
 
-    // Contact Form
-    let contactSubmitted = false; let contactTimer = null;
-    //function handleContactSubmit(form) { universalSubmit('submitBtnContact', 'إرسال الرسالة', 'contactTimer', 'contactSubmitted', 'contactForm'); }
-    function onContactIframeLoad() { 
+        return true; 
+    }
+
+    // 4. HANDLERS (Must be async to wait for the internet check)
+    async function handleContactSubmit(form) { return await universalSubmit('submitBtnContact', 'إرسال الرسالة', 'contactTimer', 'contactSubmitted', 'contactForm'); }
+    async function handleFormSubmit(form) { return await universalSubmit('submitBtn', 'إرسال تفاصيل العرض', 'offerTimer', 'offerSubmitted', 'offerForm'); }
+    async function handleDemandSubmit(form) { return await universalSubmit('submitBtnDemand', 'إرسال تفاصيل الطلب', 'demandTimer', 'demandSubmitted', 'demandForm'); }
+    async function handleFindSupplierSubmit(form) { return await universalSubmit('submitBtnFindSupplier', 'إرسال الطلب', 'findSupplierTimer', 'findSupplierSubmitted', 'findSupplierForm'); }
+    async function handleNewSupplierSubmit(form) { return await universalSubmit('submitBtnNewSupplier', 'تسجيل المورد', 'newSupplierTimer', 'newSupplierSubmitted', 'newSupplierForm'); }
+
+    // 5. IFRAME CALLBACKS (Globally defined to fix ReferenceErrors)
+    window.onContactIframeLoad = function() { 
         if (!contactSubmitted) return; clearTimeout(contactTimer); contactSubmitted = false;
         document.getElementById('contactForm').classList.add('hidden');
         document.getElementById('successMessageContact').classList.remove('hidden');
     }
-
-    // Offer Form
-    let offerSubmitted = false; let offerTimer = null;
-    //function handleFormSubmit(form) { universalSubmit('submitBtn', 'إرسال تفاصيل العرض', 'offerTimer', 'offerSubmitted', 'offerForm'); }
-    function onOfferIframeLoad() {
+    window.onOfferIframeLoad = function() {
         if (!offerSubmitted) return; clearTimeout(offerTimer); offerSubmitted = false;
         document.getElementById('offerForm').classList.add('hidden');
         document.getElementById('successMessage').classList.remove('hidden');
     }
-
-    // Demand Form
-    let demandSubmitted = false; let demandTimer = null;
-    //function handleDemandSubmit(form) { universalSubmit('submitBtnDemand', 'إرسال تفاصيل الطلب', 'demandTimer', 'demandSubmitted', 'demandForm'); }
-    function onDemandIframeLoad() {
+    window.onDemandIframeLoad = function() {
         if (!demandSubmitted) return; clearTimeout(demandTimer); demandSubmitted = false;
         document.getElementById('demandForm').classList.add('hidden');
         document.getElementById('successMessageDemand').classList.remove('hidden');
     }
-
-    // Find Supplier Form (New)
-    let findSupplierSubmitted = false; let findSupplierTimer = null;
-    //function handleFindSupplierSubmit(form) { universalSubmit('submitBtnFindSupplier', 'إرسال الطلب', 'findSupplierTimer', 'findSupplierSubmitted', 'findSupplierForm'); }
-    function onFindSupplierIframeLoad() {
+    window.onFindSupplierIframeLoad = function() {
         if (!findSupplierSubmitted) return; clearTimeout(findSupplierTimer); findSupplierSubmitted = false;
         document.getElementById('findSupplierForm').classList.add('hidden');
         document.getElementById('successMessageFindSupplier').classList.remove('hidden');
     }
-
-    // New Supplier Form (New)
-    let newSupplierSubmitted = false; let newSupplierTimer = null;
-    //function handleNewSupplierSubmit(form) { universalSubmit('submitBtnNewSupplier', 'تسجيل المورد', 'newSupplierTimer', 'newSupplierSubmitted', 'newSupplierForm'); }
-    function onNewSupplierIframeLoad() {
+    window.onNewSupplierIframeLoad = function() {
         if (!newSupplierSubmitted) return; clearTimeout(newSupplierTimer); newSupplierSubmitted = false;
         document.getElementById('newSupplierForm').classList.add('hidden');
         document.getElementById('successMessageNewSupplier').classList.remove('hidden');
     }
 
-    // ==========================================
-    // 4. UI & NAVIGATION LOGIC
-    // ==========================================
+    // 6. UI & NAVIGATION
     function switchTab(type) {
-        // Update URL
         const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?type=' + type;
         window.history.pushState({path:newurl},'',newurl);
-
-        // Investment Tabs
-        const offerTab = document.getElementById('tab-offer');
-        const demandTab = document.getElementById('tab-demand');
-        const offerBtn = document.getElementById('btn-offer');
-        const demandBtn = document.getElementById('btn-demand');
-
-        // Supplier Tabs
-        const findSupTab = document.getElementById('tab-find-supplier');
-        const newSupTab = document.getElementById('tab-new-supplier');
-        const findSupBtn = document.getElementById('btn-find-supplier');
-        const newSupBtn = document.getElementById('btn-new-supplier');
-
-        // Hide all first
-        [offerTab, demandTab, findSupTab, newSupTab].forEach(el => el?.classList.remove('active'));
-        [offerBtn, demandBtn, findSupBtn, newSupBtn].forEach(el => el?.classList.remove('bg-white', 'text-blue-900', 'shadow-md'));
-
-        // Activate requested
-        if (type === 'offer') {
-            offerTab.classList.add('active');
-            offerBtn.classList.add('bg-white', 'text-blue-900', 'shadow-md');
-        } else if (type === 'demand') {
-            demandTab.classList.add('active');
-            demandBtn.classList.add('bg-white', 'text-blue-900', 'shadow-md');
-        } else if (type === 'find-supplier') {
-            findSupTab.classList.add('active');
-            findSupBtn.classList.add('bg-white', 'text-blue-900', 'shadow-md');
-        } else if (type === 'new-supplier') {
-            newSupTab.classList.add('active');
-            newSupBtn.classList.add('bg-white', 'text-blue-900', 'shadow-md');
-        }
+        const tabs = ['tab-offer', 'tab-demand', 'tab-find-supplier', 'tab-new-supplier'];
+        const btns = ['btn-offer', 'btn-demand', 'btn-find-supplier', 'btn-new-supplier'];
+        tabs.forEach(id => document.getElementById(id)?.classList.remove('active'));
+        btns.forEach(id => document.getElementById(id)?.classList.remove('bg-white', 'text-blue-900', 'shadow-md'));
+        
+        const activeTab = document.getElementById('tab-' + type);
+        const activeBtn = document.getElementById('btn-' + type);
+        if(activeTab) activeTab.classList.add('active');
+        if(activeBtn) activeBtn.classList.add('bg-white', 'text-blue-900', 'shadow-md');
     }
 
     function openTradingForm() {
         document.getElementById('supplier-forms').style.display = 'none';
         const formsSection = document.getElementById('forms');
         formsSection.style.display = 'block';
-        formsSection.scrollIntoView({behavior: 'smooth',block: 'start'});
+        formsSection.scrollIntoView({behavior: 'smooth', block: 'start'});
         switchTab('offer');
     }
 
@@ -695,13 +644,11 @@ async function handleNewSupplierSubmit(form) { return await universalSubmit('sub
         document.getElementById('forms').style.display = 'none';
         const supplierSection = document.getElementById('supplier-forms');
         supplierSection.style.display = 'block';
-        supplierSection.scrollIntoView({behavior: 'smooth',block: 'start'});
+        supplierSection.scrollIntoView({behavior: 'smooth', block: 'start'});
         switchTab('find-supplier');
     }
 
-    function showAbout() {
-        document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
-    }
+    function showAbout() { document.getElementById('about').scrollIntoView({ behavior: 'smooth' }); }
 
     function toggleModal(id) {
         const modal = document.getElementById(id);
@@ -710,18 +657,12 @@ async function handleNewSupplierSubmit(form) { return await universalSubmit('sub
         document.body.classList.toggle('modal-active');
     }
 
-    // Handle URL params on load
     window.addEventListener('DOMContentLoaded', () => {
         const urlParams = new URLSearchParams(window.location.search);
         const type = urlParams.get('type');
-        if (type === 'offer' || type === 'demand') {
-            openTradingForm();
-            switchTab(type);
-        } else if (type === 'find-supplier' || type === 'new-supplier') {
-            openSupplierForm();
-            switchTab(type);
-        }
+        if (type === 'offer' || type === 'demand') openTradingForm();
+        else if (type === 'find-supplier' || type === 'new-supplier') openSupplierForm();
     });
-    </script>
+</script>
 </body>
 </html>
