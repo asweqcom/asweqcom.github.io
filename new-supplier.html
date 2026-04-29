@@ -1,716 +1,88 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" class="scroll-smooth">
+<html lang="ar" dir="rtl">
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WPTBBHRDTY"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-WPTBBHRDTY');
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أسواق | بوابة رواد الأعمال</title>
-    <meta name="description" content="وكالة تسويق B2B رائدة لربط الموردين بالشركات والمستثمرين بالفرص الواعدة. نعمل بنظام العمولات عند إتمام الصفقات فقط.">
-    <meta name="keywords" content="تسويق B2B, ربط شركات, موردين, استثمار السعودية, بيع شركات, منصة أسواق">
-    <meta name="author" content="أسواق">
+    <title>Offers</title>
+    <meta property="og:title" content="ASWEQ">
 
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://asweq.com/">
-    <meta property="og:title" content="أسواق | شريكك في النمو والتسويق">
-    <meta property="og:description" content="نربطك بالموردين، الشركات، والمستثمرين. ادفع فقط عند إتمام الصفقة.">
-    <meta property="og:image" content="https://asweq.com/images/og-image.jpg">
-    <link rel="icon" type="image/png" href="images/logo.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .modal { transition: opacity 0.25s ease; z-index: 100; }
-        body.modal-active { overflow: hidden; }
-        .hidden { display: none; }
+        /* Modern Minimalist Style */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffffff; /* Clean White BG */
+            overflow: hidden;
+        }
+
+        /* Modern 3-Bar Loader */
+        .loader {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: 50px;
+            height: 40px;
+        }
+
+        .bar {
+            width: 5px;
+            height: 10px;
+            background-color: #1e115c; /* Dark Green */
+            border-radius: 10px;
+            animation: grow 1s ease-in-out infinite;
+        }
+
+        .bar:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .bar:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes grow {
+            0%, 100% {
+                height: 10px;
+                opacity: 0.3;
+            }
+            50% {
+                height: 35px;
+                opacity: 1;
+            }
+        }
+
+        /* Container fade-in for smooth entry */
+        .loader-wrapper {
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body>
 
-    <header class="bg-white shadow-sm top-0 z-50">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-reverse space-x-2">
-                <img src="images/logo.png" alt="أسواق" class="h-10">
-                <span class="text-2xl font-bold text-blue-900 leading-none">أسواق<br><span class="text-xs text-blue-500 font-normal tracking-widest uppercase">asweq.com</span></span>
-            </div>
-            <ul class="hidden md:flex space-x-reverse space-x-8 font-medium">
-                <li><a href="#home" class="hover:text-blue-700 transition">الرئيسية</a></li>
-                <li><a href="#services" class="hover:text-blue-700 transition">خدماتنا</a></li>
-                <li><a href="javascript:void(0)" onclick="showAbout()" class="hover:text-blue-700 transition">عن الوكالة</a></li>
-            </ul>
-            <a href="#contact-us" class="bg-blue-900 text-white px-5 py-2 rounded-full hover:bg-blue-800 transition text-sm">تواصل معنا</a>
-        </nav>
-    </header>
-
-    <section id="home" class="relative bg-blue-900 py-24 text-white overflow-hidden">
-        <div class="absolute inset-0 opacity-20">
-            <img src="images/cover.jpg" alt="background" class="w-full h-full object-cover">
-        </div>
-        <div class="container mx-auto px-6 relative z-10 text-center">
-            <span class="inline-block bg-amber-500 text-blue-950 px-4 py-1 rounded-full text-sm font-bold mb-4">B2B Marketing</span>
-            <h1 class="text-4xl md:text-6xl font-bold mb-6">وجهتك الأولى للتسويق بين الشركات</h1>
-            <p class="text-xl text-blue-100 max-w-3xl mx-auto mb-10 leading-relaxed">
-                وكالة أسواق هي المحرك الاستراتيجي لربط الموردين بالشركات، والمستثمرين بالكيانات التجارية. نساعدك في الوصول إلى فرص عمل مميزة.
-            </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="javascript:void(0)" onclick="openSupplierForm()" class="bg-white hover:bg-gray-100 text-blue-900 font-bold px-8 py-4 rounded-xl transition shadow-lg">أبحث عن مورد</a>
-                <a href="javascript:void(0)" onclick="openTradingForm()" class="bg-amber-500 hover:bg-amber-600 text-blue-950 font-bold px-8 py-4 rounded-xl transition shadow-lg">أبحث عن مستثمر</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="services" class="py-16 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-blue-900">حلولنا التسويقية B2B</h2>
-                <div class="h-1 w-20 bg-amber-500 mx-auto mt-4"></div>
-            </div>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="p-8 border border-gray-100 rounded-3xl bg-gray-50 hover:shadow-xl transition">
-                    <div class="text-4xl mb-4">🏢</div>
-                    <h3 class="text-xl font-bold mb-3">ربط الموردين بالشركات</h3>
-                    <p class="text-gray-600 text-sm">نؤمن قنوات اتصال مباشرة بين كبار الموردين والشركات لضمان سلاسل إمداد مستقرة بأسعار تنافسية.</p>
-                </div>
-                <div class="p-8 border border-gray-100 rounded-3xl bg-gray-50 hover:shadow-xl transition">
-                    <div class="text-4xl mb-4">💰</div>
-                    <h3 class="text-xl font-bold mb-3">ربط المستثمرين والشركات</h3>
-                    <p class="text-gray-600 text-sm">نطابق بين رؤوس الأموال الباحثة عن نمو وبين الشركات الواعدة التي تتطلع للتوسع والتمويل.</p>
-                </div>
-                <div class="p-8 border border-gray-100 rounded-3xl bg-gray-50 hover:shadow-xl transition">
-                    <div class="text-4xl mb-4">🤝</div>
-                    <h3 class="text-xl font-bold mb-3">الوساطة على الإنجاز</h3>
-                    <p class="text-gray-600 text-sm">نموذج عملنا يعتمد كلياً على النجاح. لا تكاليف مقدمة، عمولتنا تُستحق فقط عند إتمام التعاقد.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="about" class="py-10 bg-gray-50 border-y">
-        <div class="container mx-auto px-6 text-center max-w-4xl">
-            <h2 class="text-3xl font-bold mb-8 text-blue-900">عن أسواق</h2>
-            <p class="text-lg text-gray-600 leading-relaxed mb-8">
-                نحن وكالة تسويق B2B متخصصة في السوق السعودي، نعمل كذراع استراتيجي لتطوير الأعمال. نتميز بشبكة علاقات واسعة تضم موردين، مستثمرين، وأصحاب قرار في مختلف القطاعات التجارية. هدفنا هو تقليل الفجوة بين الأطراف التجارية وضمان أعلى عوائد ممكنة لشركائنا.
-            </p>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="p-6 bg-white rounded-2xl shadow-sm border-t-4 border-amber-500">
-                    <div class="text-blue-900 text-3xl mb-2">🌐</div>
-                    <h4 class="font-bold mb-2">تسويق واسع</h4>
-                    <p class="text-sm text-gray-500 leading-relaxed">
-                        نصل إلى مئات الآلاف الشركات، المستثمرين، والموردين عبر قنوات الاتصال المباشرة.
-                    </p>
-                </div>
-                <div class="p-6 bg-white rounded-2xl shadow-sm border-amber-500 border-t-4 md:border-t-0 md:border-b-4">
-                    <div class="text-blue-900 text-3xl mb-2">🔍</div>
-                    <h4 class="font-bold mb-2">تحليل الفرص</h4>
-                    <p class="text-sm text-gray-500">ندرس كل فرصة بعناية قبل عرضها على المستثمرين أو الشركات.</p>
-                </div>
-                <div class="p-6 bg-white rounded-2xl shadow-sm border-t-4 border-amber-500">
-                    <div class="text-blue-900 text-3xl mb-2">📈</div>
-                    <h4 class="font-bold mb-2">توسع مدروس</h4>
-                    <p class="text-sm text-gray-500">نساعد الشركات في الدخول إلى أسواق جديدة عبر ربطهم بالموردين المناسبين.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-
-    <section id="contact-us" class="py-16 bg-white border-b">
-        <div class="container mx-auto px-6 max-w-2xl text-center">
-            <h2 class="text-3xl font-bold text-blue-900 mb-4">تواصل معنا</h2>
-            <p class="text-gray-600 mb-10"> يسعدنا تواصلك معنا مباشرة عبر النموذج أدناه.</p>
-
-            <form id="contactForm" class="space-y-6 text-right" target="hidden_iframe_contact" onsubmit="return handleContactSubmit(this)">
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-sm font-bold mb-2">الإسم الكريم *</label>
-                        <input type="text" name="entry.739963873" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold mb-2">رقم التواصل *</label>
-                        <input type="tel" name="entry.139505973" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" required>
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-sm font-bold mb-2">البريد الإلكتروني</label>
-                    <input type="email" name="entry.1778610090" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
-                </div>
-                <div>
-                    <label class="block text-sm font-bold mb-2">رسالتك</label>
-                    <textarea name="entry.1760008557" rows="4" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" placeholder="كيف يمكننا مساعدتك؟"></textarea>
-                </div>
-
-                <button type="submit" id="submitBtnContact" class="w-full py-4 bg-blue-900 text-white rounded-xl font-bold text-lg shadow-lg hover:bg-blue-800 transition transform hover:-translate-y-1">
-                    إرسال الرسالة
-                </button>
-            </form>
-
-            <div id="successMessageContact" class="hidden py-10 text-center">
-                <div class="inline-flex items-center justify-center w-20 h-20 bg-green-100 text-green-600 rounded-full mb-6">
-                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                </div>
-                <h3 class="text-2xl font-bold text-gray-800 mb-2">تم استلام رسالتك بنجاح</h3>
-                <p class="text-gray-500">سنقوم بالرد عليك في أقرب وقت ممكن.</p>
-                <button onclick="location.reload()" class="text-blue-600 font-bold hover:underline">ارسل رسالة اخرى</button>
-            </div>
-        </div>
-    </section>
-
-    <iframe name="hidden_iframe_contact" id="hidden_iframe_contact" style="display:none;" onload="onContactIframeLoad()"></iframe>
-    <section id="supplier-forms" class="py-10 bg-gray-50" style="display: none;">
-        <div class="container mx-auto px-6 max-w-4xl mb-5">
-            <div class="text-center mb-8">
-                <h2 class="text-2xl font-bold text-blue-900">قسم الموردين والشركات</h2>
-                <p class="text-gray-500">سواء كنت تبحث عن مورد أو ترغب في التسجيل كمورد معتمد</p>
-            </div>
-            
-            <div class="flex bg-gray-200 p-1 rounded-2xl mb-10 shadow-inner">
-                <button id="btn-find-supplier" onclick="switchTab('find-supplier')" class="flex-1 py-4 rounded-xl text-lg font-bold transition-all duration-300">
-                    🔍 أبحث عن مورد
-                </button>
-                <button id="btn-new-supplier" onclick="switchTab('new-supplier')" class="flex-1 py-4 rounded-xl text-lg font-bold transition-all duration-300">
-                    🤝 تسجيل كمورد جديد
-                </button>
-            </div>
-
-            <div id="tab-find-supplier" class="tab-content bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100">
-                <h3 class="text-2xl font-bold text-blue-900 mb-8 flex items-center">
-                    <span class="w-2 h-8 bg-blue-500 ml-3 rounded-full"></span>
-                    طلب عروض الموردين
-                </h3>
-                <form id="findSupplierForm" class="space-y-6 text-right" target="hidden_iframe_find_supplier" onsubmit="return handleFindSupplierSubmit(this)">
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-bold mb-2">اسم الشركة (صاحب الطلب) *</label>
-                            <input type="text" name="entry.1820009987" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold mb-2">اسم المسؤول *</label>
-                            <input type="text" name="entry.2132856426" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold mb-2">رقم التواصل *</label>
-                            <input type="tel" name="entry.1020578660" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold mb-2">البريد الإلكتروني *</label>
-                            <input type="email" name="entry.381080990" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" required>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold mb-2">الأنشطة المطلوبة *</label>
-                        <textarea name="entry.1196426280" rows="3" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" placeholder="مثال: نقل مبرد - تعبئة وتغليف - حراسات أمنية..." required></textarea>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold mb-2">تفاصيل إضافية</label>
-                        <textarea name="entry.94354342" rows="3" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" placeholder="أي شروط أو تفاصيل أخرى"></textarea>
-                    </div>
-                    <button type="submit" id="submitBtnFindSupplier" class="w-full py-4 bg-blue-900 text-white rounded-xl font-bold text-lg shadow-lg hover:bg-blue-800 transition transform hover:-translate-y-1">إرسال الطلب</button>
-                </form>
-                <div id="successMessageFindSupplier" class="hidden py-10 text-center">
-                    <div class="inline-flex items-center justify-center w-20 h-20 bg-green-100 text-green-600 rounded-full mb-6">
-                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-2">تم استلام طلبك بنجاح</h3>
-                    <p class="text-gray-500 mb-4">سنقوم بمراجعة طلبك والتواصل معك في أقرب وقت ممكن.</p>
-                    <button onclick="location.reload()" class="text-blue-600 font-bold hover:underline">تقديم طلب آخر</button>
-                </div>
-            </div>
-
-            <div id="tab-new-supplier" class="tab-content bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100">
-                <h3 class="text-2xl font-bold text-blue-900 mb-8 flex items-center">
-                    <span class="w-2 h-8 bg-amber-500 ml-3 rounded-full"></span>
-                    تسجيل مورد جديد
-                </h3>
-                <form id="newSupplierForm" class="space-y-6 text-right" target="hidden_iframe_new_supplier" onsubmit="return handleNewSupplierSubmit(this)">
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-bold mb-2">اسم المنشأة *</label>
-                            <input type="text" name="entry.2004896662" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold mb-2">اسم المسؤول *</label>
-                            <input type="text" name="entry.577925926" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold mb-2">رقم الجوال *</label>
-                            <input type="tel" name="entry.1752555753" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold mb-2">البريد الإلكتروني *</label>
-                            <input type="email" name="entry.828917352" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" required>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold mb-2">نوع المورد *</label>
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 bg-gray-50 p-4 rounded-xl border border-gray-200">
-                            <label class="flex items-center space-x-reverse space-x-2 cursor-pointer">
-                                <input type="checkbox" name="entry.1265930638" value="مصنع" class="w-5 h-5 text-blue-900 rounded focus:ring-blue-500">
-                                <span>مصنع</span>
-                            </label>
-                            <label class="flex items-center space-x-reverse space-x-2 cursor-pointer">
-                                <input type="checkbox" name="entry.1265930638" value="مزود خدمات" class="w-5 h-5 text-blue-900 rounded focus:ring-blue-500">
-                                <span>مزود خدمات</span>
-                            </label>
-                            <label class="flex items-center space-x-reverse space-x-2 cursor-pointer">
-                                <input type="checkbox" name="entry.1265930638" value="تاجر جملة" class="w-5 h-5 text-blue-900 rounded focus:ring-blue-500">
-                                <span>تاجر جملة</span>
-                            </label>
-                            <label class="flex items-center space-x-reverse space-x-2 cursor-pointer">
-                                <input type="checkbox" name="entry.1265930638" value="آخر" class="w-5 h-5 text-blue-900 rounded focus:ring-blue-500">
-                                <span>آخر</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold mb-2">المنتجات والخدمات التي تقدمها *</label>
-                        <textarea name="entry.718691266" rows="3" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" required></textarea>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold mb-2">تفاصيل إضافية</label>
-                        <textarea name="entry.1603800494" rows="3" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"></textarea>
-                    </div>
-                    <button type="submit" id="submitBtnNewSupplier" class="w-full py-4 bg-amber-500 text-blue-950 rounded-xl font-bold text-lg shadow-lg hover:bg-amber-600 transition transform hover:-translate-y-1">تسجيل المورد</button>
-                </form>
-                <div id="successMessageNewSupplier" class="hidden py-10 text-center">
-                    <div class="inline-flex items-center justify-center w-20 h-20 bg-green-100 text-green-600 rounded-full mb-6">
-                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-2">تم تسجيل بياناتك بنجاح</h3>
-                    <p class="text-gray-500 mb-4">شكراً لانضمامك لشبكة موردين أسواق، سنقوم بمراجعة بياناتك والتواصل معك عند توفر فرص مناسبة.</p>
-                    <button onclick="location.reload()" class="text-blue-600 font-bold hover:underline">تسجيل مورد آخر</button>
-                </div>
-            </div>
-            
-            <iframe name="hidden_iframe_find_supplier" id="hidden_iframe_find_supplier" style="display:none;" onload="onFindSupplierIframeLoad()"></iframe>
-            <iframe name="hidden_iframe_new_supplier" id="hidden_iframe_new_supplier" style="display:none;" onload="onNewSupplierIframeLoad()"></iframe>
-        </div>
-    </section>
-    <section id="forms" class="py-10 bg-gray-50" style="display: none;">
-        <div class="container mx-auto px-6 max-w-4xl mb-5">
-            <div class="text-center mb-8">
-                <h2 class="text-2xl font-bold text-blue-900">قسم عرض وطلب الفرص الاستثمارية</h2>
-                <p class="text-gray-500">يرجى تعبئة النموذج أدناه</p>
-            </div>
-            
-            <div class="flex bg-gray-200 p-1 rounded-2xl mb-10 shadow-inner">
-                <button id="btn-offer" onclick="switchTab('offer')" class="flex-1 py-4 rounded-xl text-lg font-bold transition-all duration-300">
-                    📢 عرض سجل للبيع
-                </button>
-                <button id="btn-demand" onclick="switchTab('demand')" class="flex-1 py-4 rounded-xl text-lg font-bold transition-all duration-300">
-                    🔍 طلب شراء سجل
-                </button>
-            </div>
-
-            <div id="tab-offer" class="tab-content active bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100">
-                <h3 class="text-2xl font-bold text-blue-900 mb-8 flex items-center">
-                    <span class="w-2 h-8 bg-amber-500 ml-3 rounded-full"></span>
-                    بيانات العرض التجاري
-                </h3>
-                
-                <form id="offerForm" class="space-y-6" target="hidden_iframe" onsubmit="return handleFormSubmit(this)">
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-bold mb-2">الإسم الكريم *</label>
-                            <input type="text" name="entry.1364189506" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold mb-2">رقم التواصل *</label>
-                            <input type="text" name="entry.604046105" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" placeholder="05xxxxxxxx" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold mb-2">عمر السجل</label>
-                            <input type="text" name="entry.1770767473" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl outline-none" placeholder="كم سنة">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold mb-2">نشاط السجل</label>
-                            <input type="text" name="entry.959025087" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl outline-none">
-                        </div>
-                    </div>
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div class="col-span-full md:col-span-1">
-                            <label class="block text-sm font-bold mb-2">هل له تمويل؟</label>
-                            <textarea name="entry.469415207" rows="2" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl outline-none" placeholder="قيمة التمويل"></textarea>
-                        </div>
-                        <div class="col-span-full md:col-span-1">
-                            <label class="block text-sm font-bold mb-2">هل عليه التزامات أو مخالفات؟</label>
-                            <textarea name="entry.1580764956" rows="2" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl outline-none" placeholder="النوع والحجم"></textarea>
-                        </div>
-                    </div>
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-bold mb-2">حجم نقاط البيع</label>
-                            <input type="text" name="entry.1203379320" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl outline-none" placeholder="عالية / متوسطة / منخفضة">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold mb-2">اسم المدينة</label>
-                            <input type="text" name="entry.1892724651" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold mb-2">سعر البيع المطلوب *</label>
-                            <input type="text" name="entry.211751052" class="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-xl outline-none font-bold text-blue-900" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold mb-2">صفة المرسل *</label>
-                            <select name="entry.944515872" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl outline-none cursor-pointer" required>
-                                <option value="" disabled selected>اختر الصفة...</option>
-                                <option value="مالك السجل">مالك السجل</option>
-                                <option value="وكيل المالك">وكيل المالك</option>
-                                <option value="وسيط">وسيط</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button type="submit" id="submitBtn" class="w-full py-4 bg-blue-900 text-white rounded-xl font-bold text-lg shadow-lg hover:bg-blue-800 transition transform hover:-translate-y-1">
-                        إرسال تفاصيل العرض
-                    </button>
-                </form>
-
-                <div id="successMessage" class="hidden py-10 text-center">
-                    <div class="inline-flex items-center justify-center w-20 h-20 bg-green-100 text-green-600 rounded-full mb-6">
-                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-2">شكراً! لقد تم الارسال بنجاح</h3>
-                    <p class="text-gray-500 mb-6">سوف يتم مراجعة العرض والتواصل معكم في أقرب وقت ممكن في حال توافقه مع متطلباتنا.</p>
-                    <button onclick="location.reload()" class="text-blue-600 font-bold hover:underline">إرسال عرض جديد</button>
-                </div>
-            </div>
-
-            <div id="tab-demand" class="tab-content bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100">
-                <h3 class="text-2xl font-bold text-blue-900 mb-8 flex items-center">
-                    <span class="w-2 h-8 bg-green-500 ml-3 rounded-full"></span>
-                    بيانات الطلب التجاري
-                </h3>
-                
-                <form id="demandForm" class="space-y-6" target="hidden_iframe_demand" onsubmit="return handleDemandSubmit(this)">
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-bold mb-2">الإسم الكريم *</label>
-                            <input type="text" name="entry.926806310" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl outline-none" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold mb-2">رقم التواصل *</label>
-                            <input type="text" name="entry.872509188" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl outline-none" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold mb-2">الأنشطة المطلوبة للسجل</label>
-                            <input type="text" name="entry.1606318705" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold mb-2">عمر السجل المطلوب</label>
-                            <input type="text" name="entry.716901651" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl outline-none" placeholder="لا يقل عن">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold mb-2">هل يشترط وجود تمويل؟</label>
-                            <input type="text" name="entry.684188537" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl outline-none" placeholder="لا / نعم (اذكر القيمة)">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold mb-2">المدن أو المواقع المطلوبة</label>
-                            <input type="text" name="entry.1114186714" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl outline-none">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold mb-2 text-green-700">ميزانية الشراء المتوقعة</label>
-                        <div class="grid grid-cols-2 gap-4">
-                            <input type="text" name="entry.2038162621" class="w-full px-4 py-3 bg-green-50 border border-green-200 rounded-xl outline-none font-bold" placeholder="من">
-                            <input type="text" name="entry.915782045" class="w-full px-4 py-3 bg-green-50 border border-green-200 rounded-xl outline-none font-bold" placeholder="إلى">
-                        </div>
-                    </div>
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-bold mb-2">صفة المرسل *</label>
-                            <select name="entry.475542026" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl outline-none cursor-pointer" required>
-                                <option value="" disabled selected>اختر الصفة...</option>
-                                <option value="المشتري">المشتري</option>
-                                <option value="وكيل المشتري">وكيل المشتري</option>
-                                <option value="وسيط">وسيط</option>
-                                <option value="أخرى">أخرى</option>
-                            </select>
-                        </div>
-                        <div class="col-span-1">
-                             <label class="block text-sm font-bold mb-2">ملاحظات أو شروط أخرى</label>
-                             <textarea name="entry.912918363" rows="1" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl outline-none"></textarea>
-                        </div>
-                    </div>
-                    <button type="submit" id="submitBtnDemand" class="w-full py-4 bg-green-600 text-white rounded-xl font-bold text-lg shadow-lg hover:bg-green-700 transition transform hover:-translate-y-1">إرسال تفاصيل الطلب</button>
-                </form>
-
-                <div id="successMessageDemand" class="hidden py-10 text-center">
-                    <div class="inline-flex items-center justify-center w-20 h-20 bg-green-100 text-green-600 rounded-full mb-6">
-                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-2">تم استلام طلبكم بنجاح!</h3>
-                    <p class="text-gray-500 mb-6">سوف نتواصل معكم في أقرب وقت ممكن.</p>
-                    <button onclick="location.reload()" class="text-green-600 font-bold hover:underline">إرسال طلب آخر</button>
-                </div>
-            </div>
-            <iframe name="hidden_iframe_demand" id="hidden_iframe_demand" style="display:none;" onload="onDemandIframeLoad()"></iframe>
-            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="onOfferIframeLoad()"></iframe>
-        </div>
-    </section>
-
-    <footer class="bg-gray-900 text-white pt-16 pb-8 border-t border-gray-800 text-right">
-        <div class="container mx-auto px-6 grid md:grid-cols-4 gap-12 mb-12">
-            <div>
-                <div class="flex items-center space-x-reverse space-x-2 mb-6 text-white">
-                    <img src="images/logo.png" alt="Logo" class="h-8 filter brightness-200">
-                    <span class="text-2xl font-bold leading-none uppercase">أسواق<br><span class="text-[8px] text-gray-400 tracking-[0.2em]">asweq.com</span></span>
-                </div>
-                <p class="text-gray-400 text-sm leading-relaxed">وكالة أسواق للربط التجاري: بوابتك نحو الصفقات الموثوقة والربط الفعال بين الشركات والمستثمرين.</p>
-            </div>
-            <div>
-                <h4 class="text-lg font-bold mb-6 text-amber-500">روابط سريعة</h4>
-                <ul class="space-y-4 text-gray-400">
-                    <li><a href="javascript:void(0)" onclick="openTradingForm()" class="hover:text-white transition">الفرص الاستثمارية</a></li>
-                    <li><a href="#services" class="hover:text-white transition">خدماتنا التجارية</a></li>
-                    <li><a href="javascript:void(0)" onclick="showAbout()" class="hover:text-white transition">من نحن</a></li>
-                    <li><a href="https://asweq.com/blog/" class="hover:text-white transition">المدونة</a></li>
-
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-lg font-bold mb-6 text-amber-500">سياسة الموقع</h4>
-                <ul class="space-y-4 text-gray-400">
-                    <li><button onclick="toggleModal('m-privacy')" class="hover:text-white transition">سياسة الخصوصية</button></li>
-                    <li><button onclick="toggleModal('m-terms')" class="hover:text-white transition">شروط الاستخدام</button></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-lg font-bold mb-6 text-amber-500">تواصل مباشر</h4>
-                <div class="space-y-4">
-                    <a href="https://wa.me/966559445541" target="_blank" class="flex items-center space-x-reverse space-x-3 bg-gray-800 p-3 rounded-xl hover:bg-green-700 transition">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="w-6 h-6" alt="WhatsApp">
-                        <span class="text-sm font-medium">966559445541+</span>
-                    </a>
-                    <a href="mailto:info@asweq.com" class="flex items-center space-x-reverse space-x-3 bg-gray-800 p-3 rounded-xl hover:bg-blue-700 transition">
-                        <svg class="w-6 h-6 fill-current text-white" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                        <span class="text-sm font-medium">info@asweq.com</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="container mx-auto px-6 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
-            <p>© 2026 أسواق asweq.com | جميع الحقوق محفوظة.</p>
-        </div>
-    </footer>
-
-    <div id="m-privacy" class="modal opacity-0 pointer-events-none fixed inset-0 flex items-center justify-center">
-        <div class="absolute inset-0 bg-black opacity-50" onclick="toggleModal('m-privacy')"></div>
-        <div class="bg-white p-8 rounded-3xl max-w-2xl relative mx-4 text-right">
-            <h2 class="text-xl font-bold mb-4 text-blue-900 border-b pb-2">سياسة الخصوصية</h2>
-            <p class="text-sm text-gray-600">نلتزم بحماية بياناتكم. المعلومات المقدمة تُستخدم فقط لغرض الوساطة التجارية والربط بين الأطراف لغرض العمل فقط.</p>
-            <button onclick="toggleModal('m-privacy')" class="mt-6 bg-blue-900 text-white px-6 py-2 rounded-xl font-bold">إغلاق</button>
-        </div>
-    </div>
-    <div id="m-terms" class="modal opacity-0 pointer-events-none fixed inset-0 flex items-center justify-center">
-        <div class="absolute inset-0 bg-black opacity-50" onclick="toggleModal('m-terms')"></div>
-        <div class="bg-white p-8 rounded-3xl max-w-2xl relative mx-4 text-right">
-            <h2 class="text-xl font-bold mb-4 text-blue-900 border-b pb-2">شروط الاستخدام</h2>
-            <p class="text-sm text-gray-600">باستخدام المنصة، تقر بصحة البيانات المقدمة. نحن وكيل تسويق لربط الأطراف ولا نتحمل مسؤولية أي التزامات سابقة.</p>
-            <button onclick="toggleModal('m-terms')" class="mt-6 bg-blue-900 text-white px-6 py-2 rounded-xl font-bold">إغلاق</button>
+    <div class="loader-wrapper">
+        <div class="loader">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
         </div>
     </div>
 
-<script>
-// 1. الوظائف العالمية (Callbacks) - يجب أن تكون في البداية لتجنب خطأ Uncaught ReferenceError
-// هذه الوظائف يتم استدعاؤها من قبل الـ iframes عند التحميل
-window.onContactIframeLoad = function() { 
-    if (typeof contactSubmitted !== 'undefined' && contactSubmitted) {
-        clearTimeout(contactTimer); contactSubmitted = false;
-        document.getElementById('contactForm').classList.add('hidden');
-        document.getElementById('successMessageContact').classList.remove('hidden');
-        document.getElementById('contact-us').scrollIntoView({ behavior: 'smooth' });
-    }
-};
+    <script>
+        // Redirect logic
+        setTimeout(function() {
+            window.location.replace("https://asweq.com/?type=new-supplier");
+        }, 1000);
+    </script>
 
-window.onOfferIframeLoad = function() {
-    if (typeof offerSubmitted !== 'undefined' && offerSubmitted) {
-        clearTimeout(offerTimer); offerSubmitted = false;
-        document.getElementById('offerForm').classList.add('hidden');
-        document.getElementById('successMessage').classList.remove('hidden');
-        document.getElementById('forms').scrollIntoView({ behavior: 'smooth' });
-    }
-};
-
-window.onDemandIframeLoad = function() {
-    if (typeof demandSubmitted !== 'undefined' && demandSubmitted) {
-        clearTimeout(demandTimer); demandSubmitted = false;
-        document.getElementById('demandForm').classList.add('hidden');
-        document.getElementById('successMessageDemand').classList.remove('hidden');
-        document.getElementById('forms').scrollIntoView({ behavior: 'smooth' });
-    }
-};
-
-window.onFindSupplierIframeLoad = function() {
-    if (typeof findSupplierSubmitted !== 'undefined' && findSupplierSubmitted) {
-        clearTimeout(findSupplierTimer); findSupplierSubmitted = false;
-        document.getElementById('findSupplierForm').classList.add('hidden');
-        document.getElementById('successMessageFindSupplier').classList.remove('hidden');
-        document.getElementById('supplier-forms').scrollIntoView({ behavior: 'smooth' });
-    }
-};
-
-window.onNewSupplierIframeLoad = function() {
-    if (typeof newSupplierSubmitted !== 'undefined' && newSupplierSubmitted) {
-        clearTimeout(newSupplierTimer); newSupplierSubmitted = false;
-        document.getElementById('newSupplierForm').classList.add('hidden');
-        document.getElementById('successMessageNewSupplier').classList.remove('hidden');
-        document.getElementById('supplier-forms').scrollIntoView({ behavior: 'smooth' });
-    }
-};
-
-// 2. الإعدادات والروابط (Configuration)
-const GOOGLE_OFFER_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSeQ6247yrwM9kiTIrvtchnG_PrpTumvka36drjPg61SF8f2GA/formResponse";
-const GOOGLE_DEMAND_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSccSKH19bDclO6Cnjm2yvoqzrkplBJKPiVVVQbonq4Eq4tjdA/formResponse";
-const GOOGLE_CONTACT_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSf7oqctQLgEglOcmhv5V999kP0fwoUMM7MAqBfsPNFJfaX0wg/formResponse";
-const GOOGLE_FIND_SUPPLIER_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSfs5X-WdLUKZ9wBr5r6VjDifMcL6qZt0-UEotweMAiO_w-4Fw/formResponse";
-const GOOGLE_NEW_SUPPLIER_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSeUsTNGUXMytnJXNRKkExWxAmNtwC7tosuy2Jj-_JP6JBkVGw/formResponse";
-
-// تعريف المتغيرات عالمياً
-var contactSubmitted = false, contactTimer = null;
-var offerSubmitted = false, offerTimer = null;
-var demandSubmitted = false, demandTimer = null;
-var findSupplierSubmitted = false, findSupplierTimer = null;
-var newSupplierSubmitted = false, newSupplierTimer = null;
-
-// 3. وظائف التحقق (Utilities)
-async function hasRealInternet() {
-    if (!window.navigator.onLine) return false;
-    try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 4000);
-        const response = await fetch("https://www.google.com/favicon.ico", { 
-            mode: 'no-cors', cache: 'no-store', signal: controller.signal 
-        });
-        clearTimeout(timeoutId);
-        return true;
-    } catch (err) { return false; }
-}
-
-// 4. منطق الإرسال الموحد (Universal Submit)
-async function universalSubmit(btnId, originalText, timerVar, submittedVarName, formId) {
-    const btn = document.getElementById(btnId);
-    const originalHTML = btn.innerHTML;
-    
-    btn.disabled = true; 
-    btn.innerHTML = `جاري التحقق...`;
-
-    // فحص الإنترنت
-    const isOnline = await hasRealInternet();
-    if (!isOnline) {
-        btn.disabled = false; 
-        btn.innerHTML = originalHTML;
-        alert("لا يوجد اتصال فعلي بالإنترنت. يرجى التأكد من الشبكة والمحاولة مرة أخرى.");
-        return false; 
-    }
-
-    // بدء الإرسال
-    btn.innerHTML = `جاري الارسال ...`;
-    window[submittedVarName] = true;
-
-    // مؤقت الأمان (10 ثوانٍ)
-    window[timerVar] = setTimeout(() => {
-        if (window[submittedVarName]) {
-            window[submittedVarName] = false;
-            btn.disabled = false; 
-            btn.innerHTML = originalHTML;
-            alert("حدث خطأ في الشبكة أو استغرق الإرسال وقتاً طويلاً.");
-        }
-    }, 10000);
-
-    return true; 
-}
-
-// 5. معالجات النماذج (Handlers)
-async function handleContactSubmit(form) { return await universalSubmit('submitBtnContact', 'إرسال الرسالة', 'contactTimer', 'contactSubmitted', 'contactForm'); }
-async function handleFormSubmit(form) { return await universalSubmit('submitBtn', 'إرسال تفاصيل العرض', 'offerTimer', 'offerSubmitted', 'offerForm'); }
-async function handleDemandSubmit(form) { return await universalSubmit('submitBtnDemand', 'إرسال تفاصيل الطلب', 'demandTimer', 'demandSubmitted', 'demandForm'); }
-async function handleFindSupplierSubmit(form) { return await universalSubmit('submitBtnFindSupplier', 'إرسال الطلب', 'findSupplierTimer', 'findSupplierSubmitted', 'findSupplierForm'); }
-async function handleNewSupplierSubmit(form) { return await universalSubmit('submitBtnNewSupplier', 'تسجيل المورد', 'newSupplierTimer', 'newSupplierSubmitted', 'newSupplierForm'); }
-
-// 6. تهيئة الصفحة عند التحميل
-document.addEventListener('DOMContentLoaded', () => {
-    // تعيين الروابط للنماذج
-    if (document.getElementById('contactForm')) document.getElementById('contactForm').action = GOOGLE_CONTACT_ACTION;
-    if (document.getElementById('offerForm')) document.getElementById('offerForm').action = GOOGLE_OFFER_ACTION;
-    if (document.getElementById('demandForm')) document.getElementById('demandForm').action = GOOGLE_DEMAND_ACTION;
-    if (document.getElementById('findSupplierForm')) document.getElementById('findSupplierForm').action = GOOGLE_FIND_SUPPLIER_ACTION;
-    if (document.getElementById('newSupplierForm')) document.getElementById('newSupplierForm').action = GOOGLE_NEW_SUPPLIER_ACTION;
-
-    // معالجة معاملات الروابط (URL Params)
-    const urlParams = new URLSearchParams(window.location.search);
-    const type = urlParams.get('type');
-    if (type === 'offer' || type === 'demand') {
-        openTradingForm();
-        switchTab(type);
-    } else if (type === 'find-supplier' || type === 'new-supplier') {
-        openSupplierForm();
-        switchTab(type);
-    }
-});
-
-// 7. منطق التنقل والواجهة (UI Logic)
-function switchTab(type) {
-    const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?type=' + type;
-    window.history.pushState({path:newurl},'',newurl);
-
-    const tabs = ['tab-offer', 'tab-demand', 'tab-find-supplier', 'tab-new-supplier'];
-    const btns = ['btn-offer', 'btn-demand', 'btn-find-supplier', 'btn-new-supplier'];
-    
-    tabs.forEach(id => document.getElementById(id)?.classList.remove('active'));
-    btns.forEach(id => document.getElementById(id)?.classList.remove('bg-white', 'text-blue-900', 'shadow-md'));
-
-    document.getElementById('tab-' + type)?.classList.add('active');
-    document.getElementById('btn-' + type)?.classList.add('bg-white', 'text-blue-900', 'shadow-md');
-}
-
-function openTradingForm() {
-    document.getElementById('supplier-forms').style.display = 'none';
-    const formsSection = document.getElementById('forms');
-    formsSection.style.display = 'block';
-    formsSection.scrollIntoView({behavior: 'smooth', block: 'start'});
-    switchTab('offer');
-}
-
-function openSupplierForm() {
-    document.getElementById('forms').style.display = 'none';
-    const supplierSection = document.getElementById('supplier-forms');
-    supplierSection.style.display = 'block';
-    supplierSection.scrollIntoView({behavior: 'smooth', block: 'start'});
-    switchTab('find-supplier');
-}
-
-function showAbout() { document.getElementById('about').scrollIntoView({ behavior: 'smooth' }); }
-function toggleModal(id) {
-    const modal = document.getElementById(id);
-    modal.classList.toggle('opacity-0');
-    modal.classList.toggle('pointer-events-none');
-    document.body.classList.toggle('modal-active');
-}
- window.addEventListener('DOMContentLoaded', () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    let type = urlParams.get('type');
-
-    // إذا لم يوجد باراميتر في الرابط، اجعله افتراضياً يفتح قسم المورد الجديد
-    if (!type) {
-        type = 'new-supplier';
-    }
-
-    if (type === 'offer' || type === 'demand') {
-        openTradingForm();
-        switchTab(type);
-    } else if (type === 'find-supplier' || type === 'new-supplier') {
-        openSupplierForm(); // يظهر قسم الموردين
-        switchTab(type);   // يفعل التبويب المطلوب (new-supplier في حالتنا)
-    }
-});
-</script>
-   <img style="display: none;" src="https://bit.ly/asweqcom">
 </body>
 </html>
